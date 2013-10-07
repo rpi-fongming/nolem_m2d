@@ -9,19 +9,18 @@
  * the file.
  *
  */
-#ifndef PCA10001_H
-#define PCA10001_H
-
-#define LED_START      18	
-#define LED_STOP       19
-#define LED_PORT       NRF_GPIO_PORT_SELECT_PORT2		// Port 2 (GPIO pin 16-23)
-#define LED_OFFSET     2
+#ifndef MELON_H
+#define MELON_H
 
 
-#define BUTTON_START   16
-#define BUTTON0        16
-#define BUTTON_STOP    17
-#define BUTTON1        17
+// PORT0
+#define Battery_AD		 01
+#define LED_BLUE       04
+#define KEY_1        	 05
+#define NeuroSky_VCC   06
+#define LED_RED        07
+#define LED_PORT_BR		 NRF_GPIO_PORT_SELECT_PORT0		// Port 0 (GPIO pin 0-7)
+
 
 #define RX_PIN_NUMBER  11
 #define TX_PIN_NUMBER  9

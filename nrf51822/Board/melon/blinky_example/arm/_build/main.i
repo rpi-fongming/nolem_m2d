@@ -8832,10 +8832,6 @@ static __inline void nrf_gpio_port_clear(nrf_gpio_port_select_t port, uint8_t cl
 
 
 
-
-
-
-
 #line 21 "..\\..\\..\\..\\Include\\boards.h"
 
 
@@ -8844,7 +8840,35 @@ static __inline void nrf_gpio_port_clear(nrf_gpio_port_select_t port, uint8_t cl
 
 
 #line 30 "..\\main.c"
+#line 1 "..\\melon.h"
 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+#line 23 "..\\melon.h"
+
+
+
+
+
+
+
+
+
+
+#line 31 "..\\main.c"
 
 
 
@@ -8855,8 +8879,8 @@ int main(void)
 
   
   nrf_gpio_range_cfg_output(18, 19);
-
-
+	nrf_gpio_cfg_output(04);
+	nrf_gpio_cfg_output(07);
 
 
 

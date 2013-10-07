@@ -27,7 +27,7 @@
 #include "nrf_delay.h"
 #include "nrf_gpio.h"
 #include "boards.h"
-
+#include "melon.h"
 /**
  * main() function
  * @return 0. int return type required by ANSI/ISO standard.
@@ -38,8 +38,8 @@ int main(void)
 
   // Configure LED-pins as outputs
   nrf_gpio_range_cfg_output(LED_START, LED_STOP);
-//	nrf_gpio_cfg_output(LED_BLUE);
-//	nrf_gpio_cfg_output(LED_RED);
+	nrf_gpio_cfg_output(LED_BLUE);
+	nrf_gpio_cfg_output(LED_RED);
 //	nrf_gpio_port_clear(LED_PORT_BR,LED_BLUE);
 //	nrf_gpio_port_clear(LED_PORT_BR,LED_RED);
 //	nrf_gpio_port_set(LED_PORT_BR,LED_BLUE);

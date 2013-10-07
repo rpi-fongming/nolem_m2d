@@ -5,6 +5,7 @@ ARM Linker, 5.02 [Build 28] [MDK-ARM Lite]
 Section Cross References
 
     main.o(i.main) refers to main.o(i.nrf_gpio_range_cfg_output) for nrf_gpio_range_cfg_output
+    main.o(i.main) refers to main.o(i.nrf_gpio_cfg_output) for nrf_gpio_cfg_output
     main.o(i.main) refers to main.o(i.nrf_gpio_port_write) for nrf_gpio_port_write
     main.o(i.main) refers to nrf_delay.o(i.nrf_delay_ms) for nrf_delay_ms
     startup_arm_nrf51.o(RESET) refers to startup_arm_nrf51.o(STACK) for __initial_sp
@@ -52,12 +53,12 @@ Image Symbol Table
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
     RESET                                    0x00000000   Section      192  startup_arm_nrf51.o(RESET)
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
     ..\..\..\..\Source\nrf_delay\nrf_delay.c 0x00000000   Number         0  nrf_delay.o ABSOLUTE
     ..\..\..\..\Source\templates\arm\arm_startup_nrf51.s 0x00000000   Number         0  startup_arm_nrf51.o ABSOLUTE
     ..\..\..\..\Source\templates\system_nrf51.c 0x00000000   Number         0  system_nrf51.o ABSOLUTE
@@ -79,11 +80,13 @@ Image Symbol Table
     .text                                    0x00000120   Section       36  init.o(.text)
     i.SystemInit                             0x00000144   Section        0  system_nrf51.o(i.SystemInit)
     i.main                                   0x00000170   Section        0  main.o(i.main)
-    i.nrf_delay_ms                           0x000001c4   Section        0  nrf_delay.o(i.nrf_delay_ms)
-    i.nrf_gpio_port_write                    0x000001dc   Section        0  main.o(i.nrf_gpio_port_write)
-    nrf_gpio_port_write                      0x000001dd   Thumb Code     8  main.o(i.nrf_gpio_port_write)
-    i.nrf_gpio_range_cfg_output              0x000001e8   Section        0  main.o(i.nrf_gpio_range_cfg_output)
-    nrf_gpio_range_cfg_output                0x000001e9   Thumb Code    28  main.o(i.nrf_gpio_range_cfg_output)
+    i.nrf_delay_ms                           0x000001d0   Section        0  nrf_delay.o(i.nrf_delay_ms)
+    i.nrf_gpio_cfg_output                    0x000001e8   Section        0  main.o(i.nrf_gpio_cfg_output)
+    nrf_gpio_cfg_output                      0x000001e9   Thumb Code    18  main.o(i.nrf_gpio_cfg_output)
+    i.nrf_gpio_port_write                    0x000001fc   Section        0  main.o(i.nrf_gpio_port_write)
+    nrf_gpio_port_write                      0x000001fd   Thumb Code     8  main.o(i.nrf_gpio_port_write)
+    i.nrf_gpio_range_cfg_output              0x00000208   Section        0  main.o(i.nrf_gpio_range_cfg_output)
+    nrf_gpio_range_cfg_output                0x00000209   Thumb Code    28  main.o(i.nrf_gpio_range_cfg_output)
     STACK                                    0x20000000   Section     2048  startup_arm_nrf51.o(STACK)
 
     Global Symbols
@@ -138,10 +141,10 @@ Image Symbol Table
     __scatterload                            0x00000121   Thumb Code    28  init.o(.text)
     __scatterload_rt2                        0x00000121   Thumb Code     0  init.o(.text)
     SystemInit                               0x00000145   Thumb Code    26  system_nrf51.o(i.SystemInit)
-    main                                     0x00000171   Thumb Code    78  main.o(i.main)
-    nrf_delay_ms                             0x000001c5   Thumb Code    20  nrf_delay.o(i.nrf_delay_ms)
-    Region$$Table$$Base                      0x00000204   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x00000204   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x00000171   Thumb Code    90  main.o(i.main)
+    nrf_delay_ms                             0x000001d1   Thumb Code    20  nrf_delay.o(i.nrf_delay_ms)
+    Region$$Table$$Base                      0x00000224   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00000224   Number         0  anon$$obj.o(Region$$Table)
     __initial_sp                             0x20000800   Data           0  startup_arm_nrf51.o(STACK)
 
 
@@ -152,36 +155,38 @@ Memory Map of the image
 
   Image Entry point : 0x000000c1
 
-  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x00000204, Max: 0x00040000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x00000224, Max: 0x00040000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x00000000, Size: 0x00000204, Max: 0x00040000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x00000000, Size: 0x00000224, Max: 0x00040000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x00000000   0x000000c0   Data   RO           86    RESET               startup_arm_nrf51.o
-    0x000000c0   0x00000000   Code   RO          147  * .ARM.Collect$$$$00000000  mc_p.l(entry.o)
-    0x000000c0   0x00000004   Code   RO          150    .ARM.Collect$$$$00000001  mc_p.l(entry2.o)
-    0x000000c4   0x00000004   Code   RO          153    .ARM.Collect$$$$00000004  mc_p.l(entry5.o)
-    0x000000c8   0x00000000   Code   RO          155    .ARM.Collect$$$$00000008  mc_p.l(entry7b.o)
-    0x000000c8   0x00000008   Code   RO          156    .ARM.Collect$$$$00000009  mc_p.l(entry8.o)
-    0x000000d0   0x00000004   Code   RO          151    .ARM.Collect$$$$00002712  mc_p.l(entry2.o)
-    0x000000d4   0x0000001e   Code   RO          125    .emb_text           nrf_delay.o
+    0x00000000   0x000000c0   Data   RO           94    RESET               startup_arm_nrf51.o
+    0x000000c0   0x00000000   Code   RO          161  * .ARM.Collect$$$$00000000  mc_p.l(entry.o)
+    0x000000c0   0x00000004   Code   RO          164    .ARM.Collect$$$$00000001  mc_p.l(entry2.o)
+    0x000000c4   0x00000004   Code   RO          167    .ARM.Collect$$$$00000004  mc_p.l(entry5.o)
+    0x000000c8   0x00000000   Code   RO          169    .ARM.Collect$$$$00000008  mc_p.l(entry7b.o)
+    0x000000c8   0x00000008   Code   RO          170    .ARM.Collect$$$$00000009  mc_p.l(entry8.o)
+    0x000000d0   0x00000004   Code   RO          165    .ARM.Collect$$$$00002712  mc_p.l(entry2.o)
+    0x000000d4   0x0000001e   Code   RO          139    .emb_text           nrf_delay.o
     0x000000f2   0x00000002   PAD
-    0x000000f4   0x0000002c   Code   RO           87    .text               startup_arm_nrf51.o
-    0x00000120   0x00000024   Code   RO          157    .text               mc_p.l(init.o)
-    0x00000144   0x0000002c   Code   RO           94    i.SystemInit        system_nrf51.o
-    0x00000170   0x00000054   Code   RO            4    i.main              main.o
-    0x000001c4   0x00000018   Code   RO          126    i.nrf_delay_ms      nrf_delay.o
-    0x000001dc   0x0000000c   Code   RO            5    i.nrf_gpio_port_write  main.o
-    0x000001e8   0x0000001c   Code   RO            6    i.nrf_gpio_range_cfg_output  main.o
-    0x00000204   0x00000000   Data   RO          159    Region$$Table       anon$$obj.o
+    0x000000f4   0x0000002c   Code   RO           95    .text               startup_arm_nrf51.o
+    0x00000120   0x00000024   Code   RO          171    .text               mc_p.l(init.o)
+    0x00000144   0x0000002c   Code   RO          102    i.SystemInit        system_nrf51.o
+    0x00000170   0x00000060   Code   RO            4    i.main              main.o
+    0x000001d0   0x00000018   Code   RO          140    i.nrf_delay_ms      nrf_delay.o
+    0x000001e8   0x00000012   Code   RO            5    i.nrf_gpio_cfg_output  main.o
+    0x000001fa   0x00000002   PAD
+    0x000001fc   0x0000000c   Code   RO            6    i.nrf_gpio_port_write  main.o
+    0x00000208   0x0000001c   Code   RO            7    i.nrf_gpio_range_cfg_output  main.o
+    0x00000224   0x00000000   Data   RO          173    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000800, Max: 0x00004000, ABSOLUTE, UNINIT)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x00000800   Zero   RW           84    STACK               startup_arm_nrf51.o
+    0x20000000   0x00000800   Zero   RW           92    STACK               startup_arm_nrf51.o
 
 
 ==============================================================================
@@ -191,15 +196,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       124         10          0          0          0       7655   main.o
-        54          4          0          0          0       1327   nrf_delay.o
-        44         14        192          0       2048        660   startup_arm_nrf51.o
-        44         18          0          0          0        461   system_nrf51.o
+       154         10          0          0          0       7931   main.o
+        54          4          0          0          0       1231   nrf_delay.o
+        44         14        192          0       2048        624   startup_arm_nrf51.o
+        44         18          0          0          0        429   system_nrf51.o
 
     ----------------------------------------------------------------------
-       268         46        192          0       2048      10103   Object Totals
+       300         46        192          0       2048      10215   Object Totals
          0          0          0          0          0          0   (incl. Generated)
-         2          0          0          0          0          0   (incl. Padding)
+         4          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -232,15 +237,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-       324         62        192          0       2048       9935   Grand Totals
-       324         62        192          0       2048       9935   ELF Image Totals
-       324         62        192          0          0          0   ROM Totals
+       356         62        192          0       2048      10003   Grand Totals
+       356         62        192          0       2048      10003   ELF Image Totals
+       356         62        192          0          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                  516 (   0.50kB)
+    Total RO  Size (Code + RO Data)                  548 (   0.54kB)
     Total RW  Size (RW Data + ZI Data)              2048 (   2.00kB)
-    Total ROM Size (Code + RO Data + RW Data)        516 (   0.50kB)
+    Total ROM Size (Code + RO Data + RW Data)        548 (   0.54kB)
 
 ==============================================================================
 
