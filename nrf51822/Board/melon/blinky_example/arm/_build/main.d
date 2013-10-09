@@ -14,5 +14,4 @@
 .\_build\main.o: ..\..\..\..\Include\nrf51_deprecated.h
 .\_build\main.o: ..\..\..\..\Include\nrf_gpio.h
 .\_build\main.o: ..\..\..\..\Include\boards.h
-.\_build\main.o: ..\..\..\..\Include\boards/pca10001.h
-.\_build\main.o: ..\melon.h
+.\_build\main.o: ..\..\..\..\Include\boards/melon.h

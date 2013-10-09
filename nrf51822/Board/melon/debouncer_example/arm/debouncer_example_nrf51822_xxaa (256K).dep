@@ -1,0 +1,32 @@
+Dependencies for Project 'debouncer_example', Target 'nrf51822_xxaa (256K)': (DO NOT MODIFY !)
+F (..\main.c)(0x52526F5C)(--feedback ".\_build\debouncer_example_arm.fed" -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\..\Include --c99 -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -DNRF51 -DSETUPA -o ".\_build\main.o" --omf_browse ".\_build\main.crf" --depend ".\_build\main.d")
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdbool.h)(0x4EB0D288)
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\..\..\..\Include\nrf.h)(0x5252252A)
+I (..\..\..\..\Include\compiler_abstraction.h)(0x5252252A)
+I (..\..\..\..\Include\nrf51.h)(0x5252252A)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x50062982)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x50595C8C)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x4FDA945C)
+I (..\..\..\..\Include\system_nrf51.h)(0x5252252A)
+I (..\..\..\..\Include\nrf51_bitfields.h)(0x5252252A)
+I (..\..\..\..\Include\nrf51_deprecated.h)(0x5252252A)
+I (..\..\..\..\Include\nrf_gpio.h)(0x5252252A)
+I (..\lib_debounce.h)(0x52522528)
+I (..\melon.h)(0x52524E80)
+F (..\..\..\..\Source\keil_arm_uv4.lnt)(0x5252252A)()
+F (..\lib_debounce.c)(0x52522528)(--feedback ".\_build\debouncer_example_arm.fed" -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\..\Include --c99 -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -DNRF51 -DSETUPA -o ".\_build\lib_debounce.o" --omf_browse ".\_build\lib_debounce.crf" --depend ".\_build\lib_debounce.d")
+I (..\lib_debounce.h)(0x52522528)
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+F (..\..\..\..\Source\templates\arm\arm_startup_nrf51.s)(0x5252252B)(--cpu Cortex-M0 --li -g --apcs=interwork --pd "__MICROLIB SETA 1" -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include --list ".\_build\startup_arm_nrf51.lst" --xref -o ".\_build\startup_arm_nrf51.o" --depend ".\_build\startup_arm_nrf51.d")
+F (..\..\..\..\Source\templates\system_nrf51.c)(0x5252252B)(--feedback ".\_build\debouncer_example_arm.fed" -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\..\Include --c99 -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -DNRF51 -DSETUPA -o ".\_build\system_nrf51.o" --omf_browse ".\_build\system_nrf51.crf" --depend ".\_build\system_nrf51.d")
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0D284)
+I (..\..\..\..\Include\nrf.h)(0x5252252A)
+I (..\..\..\..\Include\compiler_abstraction.h)(0x5252252A)
+I (..\..\..\..\Include\nrf51.h)(0x5252252A)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x50062982)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x50595C8C)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x4FDA945C)
+I (..\..\..\..\Include\system_nrf51.h)(0x5252252A)
+I (..\..\..\..\Include\nrf51_bitfields.h)(0x5252252A)
+I (..\..\..\..\Include\nrf51_deprecated.h)(0x5252252A)

@@ -21,6 +21,8 @@
 #define LED_RED        07
 #define LED_PORT_BR		 NRF_GPIO_PORT_SELECT_PORT0		// Port 0 (GPIO pin 0-7)
 
+#define Battery_Check  8
+
 
 #define RX_PIN_NUMBER  11
 #define TX_PIN_NUMBER  9

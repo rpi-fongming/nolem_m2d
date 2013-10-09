@@ -8798,7 +8798,7 @@ static __inline void nrf_gpio_port_clear(nrf_gpio_port_select_t port, uint8_t cl
 
 
 
-#line 1 "..\\..\\..\\..\\Include\\boards/pca10001.h"
+#line 1 "..\\..\\..\\..\\Include\\boards/melon.h"
 
 
 
@@ -8815,6 +8815,7 @@ static __inline void nrf_gpio_port_clear(nrf_gpio_port_select_t port, uint8_t cl
 
 
 
+#line 23 "..\\..\\..\\..\\Include\\boards/melon.h"
 
 
 
@@ -8827,20 +8828,12 @@ static __inline void nrf_gpio_port_clear(nrf_gpio_port_select_t port, uint8_t cl
 
 
 
-
-
-
-
-
-#line 21 "..\\..\\..\\..\\Include\\boards.h"
-
-
+#line 25 "..\\..\\..\\..\\Include\\boards.h"
 
 
 
 
 #line 30 "..\\main.c"
-#line 1 "..\\melon.h"
 
 
 
@@ -8849,53 +8842,176 @@ static __inline void nrf_gpio_port_clear(nrf_gpio_port_select_t port, uint8_t cl
 
 
 
+
+static uint_fast16_t timer0_cc0_period;  
 
 
  
+static void timer0_init(void);
 
 
+ 
+void TIMER0_IRQHandler(void)
+{
+	static unsigned int tCnt = 0;
+	
+  if ((((NRF_TIMER_Type *) 0x40008000UL)->EVENTS_COMPARE[0] != 0) && ((((NRF_TIMER_Type *) 0x40008000UL)->INTENSET & (0x1UL << (16UL))) != 0))
+  {
+    ((NRF_TIMER_Type *) 0x40008000UL)->EVENTS_COMPARE[0] = 0;
+    ((NRF_TIMER_Type *) 0x40008000UL)->CC[0] += timer0_cc0_period;
+		if (tCnt==0)
+		{
+			tCnt = 1;
+
+		}
+		else
+		{
+			tCnt -= 1;
+		}
+			nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT0, nrf_gpio_port_read(NRF_GPIO_PORT_SELECT_PORT0) ^ 0xff); 	
+	
+
+  }
+}
+
+static void timer0_init(void)
+{
+  ((NRF_TIMER_Type *) 0x40008000UL)->MODE = (0UL); 
+  ((NRF_TIMER_Type *) 0x40008000UL)->PRESCALER = (9UL);
+  ((NRF_TIMER_Type *) 0x40008000UL)->BITMODE = (0x02UL);  
+
+  
+  ((NRF_TIMER_Type *) 0x40008000UL)->INTENSET = (1UL << (16UL));
+  ((NRF_TIMER_Type *) 0x40008000UL)->CC[0] = timer0_cc0_period;
+  ((NRF_TIMER_Type *) 0x40008000UL)->TASKS_START = 1; 
+}
+
+uint8_t key_scan(uint8_t tKey)
+{
+		static uint8_t pkey=0;
+		uint8_t tMode=0;
+		
+		if (tKey==0)
+		{
+				tMode = pkey;
+				pkey = 0;
+		}
+		else
+		{
+				tMode = pkey | 0x01;		
+				pkey = 0x02;
+		}
+
+		return (tMode & 0x03);
+	
+}
 
 
-
-#line 23 "..\\melon.h"
-
-
-
-
-
-
-
-
-
-
-#line 31 "..\\main.c"
 
 
 
  
 int main(void)
 {
-  uint8_t output_state = 0;
-
+	uint8_t tCnt=0;
+	uint8_t tKey=0;
+	uint8_t tMode=4;
+	
+	
   
-  nrf_gpio_range_cfg_output(18, 19);
 	nrf_gpio_cfg_output(04);
 	nrf_gpio_cfg_output(07);
+	nrf_gpio_cfg_output(06);
+	nrf_gpio_cfg_input(05,NRF_GPIO_PIN_PULLUP);
+	nrf_gpio_cfg_input(01,NRF_GPIO_PIN_PULLUP);
+	nrf_gpio_cfg_input(8,NRF_GPIO_PIN_PULLUP);
 
-
-
-
-  nrf_gpio_range_cfg_output(00,07);
-	nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT0, 0x80); 	
   
+  timer0_cc0_period = ((1000000UL * (1000 * 1 / (60U))) / ((SystemCoreClock >> (9UL))));
+  timer0_init();
+
+
+
+	
+	nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<07);
+	nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<04);
+	
+	tKey = key_scan (nrf_gpio_pin_read(05));
 	while(1)
   {
-    nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT2, 1 << (output_state + 2));
+    nrf_delay_ms(100);
+	  tCnt ++;
+		tKey = key_scan (nrf_gpio_pin_read(05));
+	
+		switch (tKey)
+		{
+			case 0:	
+				break;
+			case 1:	
+				break;
+			case 2:	
+				tMode ++;
+				if (tMode >=6)
+						tMode = 0;
+				break;
+			case 3:	
+				break;
+		}
 
-		nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT0, nrf_gpio_port_read(NRF_GPIO_PORT_SELECT_PORT0) ^ 0xff); 	
-    output_state = (output_state + 1) & 0x01;
-    nrf_delay_ms(1000);
-  }
+		switch (tMode)
+		{
+			case 0:
+						nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<07);
+						nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<04);
+						nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<06);
+						break;
+				
+			case 1:
+						nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<07);
+						nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<04);
+						nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<06);
+						break;
+
+			case 2:
+						nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<07);
+						nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<04);
+						nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<06);
+						break;
+				
+			case 3:
+						nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<07);
+						nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<04);
+						nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<06);
+						break;			
+			case 4:
+						if ((tCnt & 0x0f) == 0x00)
+						{
+							nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<07);
+							nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<04);
+						}			
+						if ((tCnt & 0x0f) == 0x08)
+						{
+							nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<07);
+							nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<04);
+						}			
+					break;		
+			case 5:
+						if ((tCnt & 0x0f) == 0x00)
+						{
+							nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<07);
+							nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<04);
+						}			
+						if ((tCnt & 0x0f) == 0x08)
+						{
+							nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 1<<07);
+							nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT0, 1<<04);
+						}			
+					break;		
+
+		}		
+
+	}
+		
 }
 
 
